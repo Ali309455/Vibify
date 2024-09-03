@@ -300,6 +300,7 @@ async function main() {
   });
   // Adding functionality to previous button
     previous.addEventListener("click", () => {
+    console.log(currentsong.src)
     let curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
     let nextfunct = altersonglist(songlist)
     let index = nextfunct.indexOf(`${curr_song}`); 
