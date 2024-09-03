@@ -1,0 +1,118 @@
+.border{
+    border: 2px solid blue;
+}
+.flex{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.m_75{
+    margin: 6px;
+    margin-top: 10px;
+}
+.m_1{
+    margin: 6px;
+    margin-top: 10px;
+}
+.p_0{
+    padding: 6px 7px;
+}
+.p_1{
+    padding: 19px 4px;
+}
+.p_2{
+    padding: 30px;
+}
+.round{
+    border-radius: 12px;
+}
+.bg_gray{
+    background-color: #121212;
+}
+.bg_black{
+    background-color: black;
+    color: white;
+}
+.invert{
+    filter: invert(1);
+}
+.bg_darkgray{
+    background-color: #0a0a0a;
+}
+.blackcircle{
+    /* position: relative;
+    top: -10px; */
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #090909;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn{
+    font-family: 'Roboto','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    font-size: 16px;
+    margin: 6px;
+    /* color: #b1b1b1; */
+}
+.grid{
+    display: grid;
+    grid-template-areas: "sec1 sec2 sec2";
+    align-items: left;
+    grid-template-columns: 0.5fr 1fr 1fr;
+}
+@media (max-width:1250px) {
+    .m_75{
+        margin: 0;
+    }
+    .grid{
+        grid-template-areas: "sec1 sec2";
+        grid-template-columns: 0 2fr;
+        gap: 0;
+    }
+}
+@media (max-width: 360px) {
+    .btn{
+        font-size: 12px;
+    }
+    .vol{
+        width: 70px;
+    }
+    .seekbar{
+        position: relative;
+        top: 18px;
+    }
+    .songinfoandcontrols{
+        position: relative;
+        top: 20px;
+    }
+  }
+
+
+
+/* Style the scrollbar track (background of the scrollbar) */
+::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+    height: 12px; /* Height of the scrollbar for horizontal scroll */
+  }
+  
+  /* Style the scrollbar track */
+  ::-webkit-scrollbar-track {
+    background: #2c2c2c; /* Dark background for the track */
+    /* border-radius: 10px; Rounded corners for the track */
+  }
+  
+  /* Style the scrollbar thumb (the draggable part of the scrollbar) */
+  ::-webkit-scrollbar-thumb {
+    background: #444; /* Dark color for the thumb */
+    /* border-radius: 10px; Rounded corners for the thumb */
+  }
+  
+  /* Style the scrollbar thumb on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #666; /* Lighter dark color for the thumb on hover */
+  }
+  

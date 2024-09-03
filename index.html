@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spotify</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="utility.css" />
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+    <div class="container grid bg_black">
+      <div class="section_25">
+        <div class="home_section flex p_2 m_1 round bg_gray">
+          <ul>
+            <div class="close"><img src="assets/close.svg" alt="close"></div>
+            <div class="logo">
+              <img class="invert" src="assets/logo.svg" alt="logo" />
+            </div>
+            <li><img class="invert" src="assets/Home.svg" alt="Home" />Home</li>
+            <li>
+              <img class="invert" src="assets/search.svg" alt="search" />Search
+            </li>
+          </ul>
+        </div>
+        <div class="library m_1 round bg_gray">
+          <div class="heading">
+            <div>
+              <img
+                class="invert"
+                src="assets/playlist.svg"
+                alt="playlist logo"
+              />
+            </div>
+            <h2>Your library</h2>
+          </div>
+          <div class="songlist">
+            <ul >
+            </ul>
+          </div>
+          <div class="footer ">
+            <div>
+              <a
+                href="https://www.spotify.com/pk-en/legal/"
+                id=""
+                data-encore-id="textLink"
+              >
+                <span data-encore-id="type">Legal</span>
+              </a>
+            </div>
+            <div>
+              <a
+              href="https://www.spotify.com/pk-en/legal/privacy-policy/"
+              id=""
+              data-encore-id="textLink"
+              >
+              <span data-encore-id="type">Privacy Policy</span>
+            </a>
+          </div>
+          <div>
+            <a
+              href="https://www.spotify.com/pk-en/safetyandprivacy/"
+              id=""
+              data-encore-id="textLink"
+            >
+              <span data-encore-id="type">Safety &amp; Privacy Center</span>
+            </a>
+          </div>
+            <div>
+              <a
+                href="https://www.spotify.com/pk-en/legal/cookies-policy/"
+                id=""
+                data-encore-id="textLink"
+              >
+                <span data-encore-id="type">Cookies</span>
+              </a>
+            </div>
+            <div>
+              <a
+                href="https://www.spotify.com/pk-en/legal/privacy-policy/#s3"
+                id=""
+                data-encore-id="textLink"
+              >
+                <span data-encore-id="type">About Ads</span>
+              </a>
+            </div>
+            <div>
+              <a
+                href="https://www.spotify.com/pk-en/accessibility/"
+                id=""
+                data-encore-id="textLink"
+              >
+                <span data-encore-id="type">Accessibility</span>
+              </a>
+            </div>
+            <div>
+              <a
+                draggable="false"
+                href="https://www.spotify.com/legal/cookies-policy/"
+                target="_blank"
+                rel="noopener"
+              >
+                <span data-encore-id="text">Cookies</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section_75 m_75 round bg_gray">
+        <div class="header round bg_darkgray">
+          <div class="nav flex">
+            <div class="hamburger">
+              <img src="assets/hamburger.svg" alt="hamburger">
+            </div>
+            <div class="left">
+              <div class="blackcircle">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 25 25"
+                  width="32"
+                  height="32"
+                  color="#ffffff"
+                  fill="none"
+                >
+                  <path
+                    d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div class="right flex">
+              <div class="blackcircle">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 25 25"
+                  width="32"
+                  height="32"
+                  color="#ffffff"
+                  fill="none"
+                >
+                  <path
+                    d="M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="buttons flex">
+            <button class="btn signup_btn">Sign Up</button>
+            <button class="btn login_btn">Log In</button>
+          </div>
+        </div>
+        <div class="Playlist_heading"><h1>Your Playlist</h1></div>
+        <div class="card_container">
+          <!-- <div class="card">
+            <div class="playbutton">
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#1E90FF" />
+                <polygon points="9,6 9,18 17,12" fill="black" />
+              </svg>
+            </div>
+            <img
+              src="https://i.scdn.co/image/ab67616d00001e02453e292ec04853335c32e0b4"
+              alt="image"
+            />
+            <h3>Jhol</h3>
+            <p>Maanu,Annural Khalid</p>
+          </div>
+           -->
+
+
+          
+        </div>
+        <div class="playbar round bg_darkgray">
+          <div class="songinfoandcontrols">
+            <div class="trackname"></div>
+          <div class="togglebtn">
+          <img id="previous" src="assets/previous.svg" alt="">
+          <img id="play" src="assets/play.svg" alt="">
+          <img id="next" src="assets/next.svg" alt="">
+        </div>
+        <div class="timeandvol">
+          <div class="duration"></div>
+          <div class="vol"><img  src="assets/volume.svg" alt="vol">
+          <div class="range">
+            <input class="volrange" type="range" value="50" min="0" max="100" id="">
+          </div>
+        </div>
+        </div>
+      </div>
+    <div class="seekbar">
+      <div class="progress_bar"></div>
+      <div class="progress_handle"></div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
