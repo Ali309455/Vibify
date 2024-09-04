@@ -231,7 +231,7 @@ async function main() {
       }
       let nextfunct = altersonglist(songlist)
       let index = nextfunct.indexOf(`${curr_song}`); 
-      if (index > 0) {
+      if (index >= 0) {
         index = index + 1;
       if (index < songlist.length) {
         playmusic(songlist[index]);
