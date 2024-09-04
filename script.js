@@ -91,10 +91,13 @@ function changemusic_logo(track) {
    
       // Check the song's play/pause state and update the icon accordingly
       let arr = Array.from(document.querySelectorAll(".songurlname"))
+      // console.log(track.replaceAll(" ", "%20").replaceAll("\\","/"));
+      // console.log(currentsong.src);
       for (const b of arr) {
         if (b.innerHTML == track && currentsong.paused){b.parentElement.querySelector(".music_logo > img").src = "assets/music_logo.svg"}
-        else if (b.innerHTML == track && currentsong.src.includes(track)) {
+        else if (b.innerHTML == track && currentsong.src.includes((track.replaceAll(" ", "%20").replaceAll("\\","/")))) {
           b.parentElement.querySelector(".music_logo > img").src = "assets/Nt6v.gif"
+          b.parentElement.querySelector(".music_logo > img").style.height = "25px";
         }
         // else if(currentsong.currentTime == currentsong.duration){
         //   b.querySelector(".music_logo > img").src = "assets/music_logo.svg"
@@ -103,6 +106,15 @@ function changemusic_logo(track) {
     });
 
   }
+
+function altersonglist(songlist){
+  let clean_list = []
+  songlist.forEach((e) =>{
+      e = e.replaceAll("\\", "/");
+      clean_list.push(e);
+  })
+  return clean_list
+}
 
 const playmusic = (track) => {
   
@@ -268,7 +280,6 @@ async function main() {
       }
     }
   });
-
   // adding click functionality in seekbar
   document.querySelector(".seekbar").addEventListener("click", (e) => {
     let clickchange =
@@ -285,18 +296,13 @@ async function main() {
   });
   // addding closing menu functionality
   document.querySelector(".close").addEventListener("click", () => {
-    // console.log('here');
-
     document.querySelector(".section_25").style.translate = "-324%";
   });
   // Adding functionality to previous button
     previous.addEventListener("click", () => {
-    // console.log("src:",currentsong.src);
-
-    let index = songlist.indexOf(currentsong.src.split("songs/")[1]);
-    // console.log(index);
-    
-
+    let curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+    let nextfunct = altersonglist(songlist)
+    let index = nextfunct.indexOf(`${curr_song}`); 
     if (index > 0) {
       index = index - 1;
       playmusic(songlist[index]);
@@ -307,16 +313,11 @@ async function main() {
     }
   });
   // Adding functionality to next button
-  const normalizePath = (path) => path.replace(/\\/g, '/');
-  const normalizedList1 = songlist.map(normalizePath);
   next.addEventListener("click", () => {
-    let chk = (currentsong.src.split("3002/")[1]).replaceAll("%20", " ");
-    let index = normalizedList1.indexOf(`'${chk}'`); //songs\\AnuvJain\\Anuv Jain - HUSN (Official Video).mp3
-    console.log('index before', index);
-    
+    let curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+    let nextfunct = altersonglist(songlist)
+    let index = nextfunct.indexOf(`${curr_song}`); 
     index = index + 1;
-    console.log('index after', index);
-
     if (index < songlist.length) {
       playmusic(songlist[index]);
       document.querySelector(".trackname").innerHTML = clean_songname(
@@ -327,8 +328,10 @@ async function main() {
   });
   // Showing vol bar on hover
   document.querySelector(".vol").addEventListener("mouseenter", () => {
+    console.log('done');
     document.querySelector(".range").style.width = "100%";
     setTimeout(() => {
+      
       document.querySelector(".range").style.width = "0";
     }, 5000);
   });
