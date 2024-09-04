@@ -1,10 +1,12 @@
-function clean(text){
-    if (text.length>=18){
-        let n = Array.from.text
-        return text.slice(0,17);
-    }
+function get_folder(track){
+
 }
 
 
+async function test() {
+    let a = await fetch(`./songs/AnuvJain/info.json`);
+    let b = await a.json();
+    console.log(b);
+}
 
-console.log(clean("cnvownfceskfdmcoewmcoewflmce"));
+test();

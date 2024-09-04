@@ -1,28 +1,40 @@
 let currentsong = new Audio();
 let folder;
 let songlist;
-async function getfolder(url) {
-  let folder_url = await fetch(url);
-  let response = await folder_url.text();
-  let div = document.createElement("div");
-  div.innerHTML = response;
-  let anchors = div.getElementsByTagName("a");
-  let folders = [];
-  for (let index = 0; index < anchors.length; index++) {
-    const element = anchors[index];
-    if (element.href.endsWith(".mp3")) {
-      // console.log(element.href)
-      // console.log('anyother file');
-    } else {
-      let filter = element.href.split("songs/")[1];
-      if (typeof filter === "undefined") {
-        // console.log("undefined value", filter);
-      } else {
-        folders.push(filter.replace("/", ""));
-      }
+
+async function getfolder(dir) {
+  try {
+    // Fetch the JSON file
+    let response = await fetch(`${dir}`);
+
+    // Check if the fetch was successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    // Parse the JSON response
+    let data = await response.json();
+    let folders = [];
+    // Process the JSON data
+    Array.from(data).forEach((item) => {
+      // Extract the song name from the path
+      let songName = item.split('songs\\')[1];
+      folders.push(songName);
+    });
+    return folders
+  } catch (error) {
+    // Log any errors encountered during fetch or processing
+    console.error("Error fetching or processing JSON:", error);
   }
-  return folders;
+}
+async function test(foldername) {
+  let raw = await fetch(`songs//${foldername}//songsinfo.json`)
+  let rawsongurls = await raw.json()
+  let songurls = []
+  Array.from(rawsongurls).forEach(async (e) =>{
+    songurls.push(e.url);
+  })
+  return(songurls)
 }
 async function getsongs(url) {
   let songs_url = await fetch(url);
@@ -94,15 +106,19 @@ function changemusic_logo(track) {
 
 const playmusic = (track) => {
   
-  currentsong.src = `./songs/${track}`;
+  currentsong.src = `${track}`;
   currentsong.play();
   changemusic_logo(track);
   play.src = "assets/pause.svg";
 };
 function clean_songname(song, folder_name) {
+  // console.log(song);
+  
   let clean_name = song
   .replaceAll("%20", " ")
+  .replaceAll("songs\\","")
   .replaceAll(`${folder_name}/`, "")
+  .replaceAll(`${folder_name}\\`, "")
     .replaceAll("128-", "")
     .replaceAll("Kbps", "")
     .replaceAll("128", "")
@@ -137,14 +153,13 @@ function playmusicfromlibrarrybtn() {
 }
 
 async function main() {
-  let all_folders = await getfolder("./songs/");
-  
+  let all_folders = await getfolder("/subfolders.json");
   if (all_folders){
   for (folder of all_folders) {
-    if (folder){
+    if (folder && folder.includes(".") == false ){
     let a = await fetch(`./songs/${folder}/info.json`)
     let info = await a.json()
-    console.log(info.title);
+    
     
     
     let carddiv = document.createElement("div");
@@ -177,7 +192,10 @@ async function main() {
     load.addEventListener('click',async function(e) {
       let parent = (e.currentTarget.parentElement);
       folder = parent.getElementsByTagName('h3')[0].innerText
-      songlist = await getsongs(`./songs/${folder}`);
+      songlist = await test(`${folder}`);
+      // songlist = await getsongs(`./songs/${folder}`);
+      console.log(songlist);
+      
 
   let songUL = document
     .querySelector(".songlist")
@@ -188,6 +206,8 @@ async function main() {
   document.querySelector(".trackname").innerHTML = clean_songname(currentsong.src.split("songs/")[1], folder)
   for (let song of songlist) {
     songurlname = song;
+    // console.log(songurlname);
+    
     // folder = songurlname.split("/")[0];
     // console.log(folder);
 
@@ -287,9 +307,16 @@ async function main() {
     }
   });
   // Adding functionality to next button
+  const normalizePath = (path) => path.replace(/\\/g, '/');
+  const normalizedList1 = songlist.map(normalizePath);
   next.addEventListener("click", () => {
-    let index = songlist.indexOf(currentsong.src.split("songs/")[1]);
+    let chk = (currentsong.src.split("3002/")[1]).replaceAll("%20", " ");
+    let index = normalizedList1.indexOf(`'${chk}'`); //songs\\AnuvJain\\Anuv Jain - HUSN (Official Video).mp3
+    console.log('index before', index);
+    
     index = index + 1;
+    console.log('index after', index);
+
     if (index < songlist.length) {
       playmusic(songlist[index]);
       document.querySelector(".trackname").innerHTML = clean_songname(
@@ -329,6 +356,10 @@ async function main() {
       document.querySelector(".vol > img").src = document.querySelector(".vol > img").src.replace( "assets/volume.svg",'assets/mute.svg');
     }
   });
+  
+  
+  
 }
 
 main();
+
