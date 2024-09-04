@@ -222,12 +222,22 @@ async function main() {
       `${progress}%`
     );
     if (currentsong.currentTime == currentsong.duration){
-      let index = songlist.indexOf(currentsong.src.split('songs/')[1])
-      index = index +1;
+      let curr_song;
+      if (currentsong.src.includes('3002')){
+      curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+      }
+      else if (currentsong.src.includes('SomethingLikeSpotify')){
+      curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
+      }
+      let nextfunct = altersonglist(songlist)
+      let index = nextfunct.indexOf(`${curr_song}`); 
+      if (index > 0) {
+        index = index + 1;
       if (index < songlist.length) {
         playmusic(songlist[index]);
         document.querySelector(".trackname").innerHTML = clean_songname(currentsong.src.split('songs/')[1], folder)
       }
+    }
     }
   });
   // adding click functionality in seekbar
