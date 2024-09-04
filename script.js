@@ -153,7 +153,7 @@ function playmusicfromlibrarrybtn() {
 }
 
 async function main() {
-  let all_folders = await getfolder("/subfolders.json");
+  let all_folders = await getfolder("./subfolders.json");
   if (all_folders){
   for (folder of all_folders) {
     if (folder && folder.includes(".") == false ){
