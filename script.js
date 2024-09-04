@@ -27,7 +27,7 @@ async function getfolder(dir) {
     console.error("Error fetching or processing JSON:", error);
   }
 }
-async function test(foldername) {
+async function getsongs(foldername) {
   let raw = await fetch(`songs//${foldername}//songsinfo.json`)
   let rawsongurls = await raw.json()
   let songurls = []
@@ -35,28 +35,6 @@ async function test(foldername) {
     songurls.push(e.url);
   })
   return(songurls)
-}
-async function getsongs(url) {
-  let songs_url = await fetch(url);
-  // console.log(songs_url.url);
-
-  let response = await songs_url.text();
-
-  let div = document.createElement("div");
-  div.innerHTML = response;
-  let anchors = div.getElementsByTagName("a");
-
-  let songs = [];
-  for (let index = 0; index < anchors.length; index++) {
-    const element = anchors[index];
-    if (element.href.endsWith(".mp3")) {
-      // console.log(element.href.split('songs/')[1]);
-      songs.push(element.href.split("songs/")[1]);
-    }
-  }
-  // console.log(songs);
-
-  return songs;
 }
 function convertMilliseconds(seconds) {
   if (isNaN(seconds) || seconds < 0) {
@@ -91,17 +69,12 @@ function changemusic_logo(track) {
    
       // Check the song's play/pause state and update the icon accordingly
       let arr = Array.from(document.querySelectorAll(".songurlname"))
-      // console.log(track.replaceAll(" ", "%20").replaceAll("\\","/"));
-      // console.log(currentsong.src);
       for (const b of arr) {
         if (b.innerHTML == track && currentsong.paused){b.parentElement.querySelector(".music_logo > img").src = "assets/music_logo.svg"}
         else if (b.innerHTML == track && currentsong.src.includes((track.replaceAll(" ", "%20").replaceAll("\\","/")))) {
           b.parentElement.querySelector(".music_logo > img").src = "assets/Nt6v.gif"
           b.parentElement.querySelector(".music_logo > img").style.height = "25px";
         }
-        // else if(currentsong.currentTime == currentsong.duration){
-        //   b.querySelector(".music_logo > img").src = "assets/music_logo.svg"
-        // }
       }
     });
 
@@ -124,7 +97,6 @@ const playmusic = (track) => {
   play.src = "assets/pause.svg";
 };
 function clean_songname(song, folder_name) {
-  // console.log(song);
   
   let clean_name = song
   .replaceAll("%20", " ")
@@ -139,26 +111,16 @@ function clean_songname(song, folder_name) {
   return clean_name;
 }
 function playmusicfromlibrarrybtn() {
-//  console.log(document.querySelector(".songlist"));
-  
   Array.from(
     document.querySelector(".songlist").getElementsByTagName("li")
   ).forEach((e) => {
-    // console.log(e);
-    
     let music_play = e.querySelector(".music_playbtn");
-    // console.log(music_play);   
       music_play.addEventListener("click", () => {
-        // console.log('clicked');
-        // console.log(document.querySelector(".music_logo > img").src);
-        // e.querySelector(".music_logo > img ").src = document.querySelector(".music_logo > img ").src.replace("music_logo.svg", "volume.svg")
-        
       console.log(e.querySelector(".songname").innerHTML);
 
       document.querySelector(".trackname").innerHTML =
         e.querySelector(".songname").innerHTML;
       e = e.querySelector(".songurlname").innerHTML;
-      // console.log(e);
       playmusic(e);
     });
   })
@@ -204,9 +166,9 @@ async function main() {
     load.addEventListener('click',async function(e) {
       let parent = (e.currentTarget.parentElement);
       folder = parent.getElementsByTagName('h3')[0].innerText
-      songlist = await test(`${folder}`);
+      songlist = await getsongs(`${folder}`);
       // songlist = await getsongs(`./songs/${folder}`);
-      console.log(songlist);
+      // console.log(songlist);
       
 
   let songUL = document
@@ -218,18 +180,8 @@ async function main() {
   document.querySelector(".trackname").innerHTML = clean_songname(currentsong.src.split("songs/")[1], folder)
   for (let song of songlist) {
     songurlname = song;
-    // console.log(songurlname);
-    
-    // folder = songurlname.split("/")[0];
-    // console.log(folder);
 
     song = clean_songname(song, `${folder}`);
-    // song = song
-    //   .replaceAll("%20", "")
-    //   .replaceAll("128-", "")
-    //   .replaceAll("Kbps", "")
-    //   .replaceAll("128", "")
-    //   .replaceAll(".mp3", "");
     songUL.innerHTML = 
       songUL.innerHTML +
       `<li>
@@ -259,7 +211,6 @@ async function main() {
   });
 
   // update time duration
-  // console.log(document.querySelector(".duration"));
   currentsong.addEventListener("timeupdate", () => {
     document.querySelector(".duration").innerHTML = `${convertMilliseconds(
       currentsong.currentTime
@@ -270,7 +221,6 @@ async function main() {
       "--progress_bar-width",
       `${progress}%`
     );
-    // console.log(currentsong.src.split('songs/')[1]);
     if (currentsong.currentTime == currentsong.duration){
       let index = songlist.indexOf(currentsong.src.split('songs/')[1])
       index = index +1;
@@ -300,7 +250,13 @@ async function main() {
   });
   // Adding functionality to previous button
     previous.addEventListener("click", () => {
-    let curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+    let curr_song;
+    if (currentsong.src.includes('3002')){
+    curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+    }
+    else if (currentsong.src.includes('SomethingLikeSpotify')){
+    curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
+    }
     let nextfunct = altersonglist(songlist)
     let index = nextfunct.indexOf(`${curr_song}`); 
     if (index > 0) {
@@ -313,8 +269,13 @@ async function main() {
     }
   });
   // Adding functionality to next button
-  next.addEventListener("click", () => {
-    let curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+  next.addEventListener("click", () => {let curr_song;
+    if (currentsong.src.includes('3002')){
+    curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+    }
+    else if (currentsong.src.includes('SomethingLikeSpotify')){
+    curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
+    }
     let nextfunct = altersonglist(songlist)
     let index = nextfunct.indexOf(`${curr_song}`); 
     index = index + 1;
@@ -337,10 +298,6 @@ async function main() {
   });
   // Adding mute functionality
   document.querySelector(".vol > img").addEventListener("click", (e) => {
-    // console.log(e.target.src.replace( "assets/volume.svg",'assets/mute.svg'));
-    // console.log(e.target.src);
-    
-    
     if(e.target.src.includes("assets/volume.svg")){e.target.src = e.target.src.replace( "assets/volume.svg",'assets/mute.svg'); currentsong.volume = 0;
        document.querySelector(".volrange").value = 0}
     else{e.target.src = e.target.src.replace( "assets/mute.svg",'assets/volume.svg'); currentsong.volume = 0.5
