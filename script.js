@@ -2,6 +2,47 @@ let currentsong = new Audio();
 let folder;
 let songlist;
 
+
+function loadfolderinlibrary(btn,play = true){
+  for (load of Array.from(document.querySelectorAll(`.${btn}`))){
+    load.addEventListener('click',async function(e) {
+      let parent = (e.currentTarget.parentElement);
+      folder = parent.getElementsByTagName('h3')[0].innerText
+      songlist = await getsongs(`${folder}`);
+      // songlist = await getsongs(`./songs/${folder}`);
+      // console.log(songlist);
+      
+
+  let songUL = document
+    .querySelector(".songlist")
+    .getElementsByTagName("ul")[0];
+    songUL.innerHTML = "";
+  // playing the first song
+  if (play == true){
+    playmusic(songlist[0])
+  document.querySelector(".trackname").innerHTML = clean_songname(currentsong.src.split("songs/")[1], folder)
+  }
+  for (let song of songlist) {
+    songurlname = song;
+
+    song = clean_songname(song, `${folder}`);
+    songUL.innerHTML = 
+      songUL.innerHTML +
+      `<li>
+                <span class = "music_logo"><img src="assets/music_logo.svg" alt="logo"></span>
+                <span class = "songname">${song}</span>
+                <span class = "songurlname">${songurlname}</span>
+                <span class = "foldername">${folder}</span>
+                <span class = "music_playbtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#ffffff" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
+                  <path d="M9.5 11.1998V12.8002C9.5 14.3195 9.5 15.0791 9.95576 15.3862C10.4115 15.6932 11.0348 15.3535 12.2815 14.6741L13.7497 13.8738C15.2499 13.0562 16 12.6474 16 12C16 11.3526 15.2499 10.9438 13.7497 10.1262L12.2815 9.32594C11.0348 8.6465 10.4115 8.30678 9.95576 8.61382C9.5 8.92086 9.5 9.6805 9.5 11.1998Z" fill="currentColor" />
+              </svg></span>
+              </li>`;
+  }
+  playmusicfromlibrarrybtn();
+    })
+  }
+}
 async function getfolder(dir) {
   try {
     // Fetch the JSON file
@@ -139,6 +180,9 @@ async function main() {
     let carddiv = document.createElement("div");
     carddiv.classList.add("card");
     carddiv.innerHTML = `
+            <div class="showsongsbtn">
+              <img src="assets/list.svg" alt="listicon">
+            </div>
             <div class="playbutton">
               <svg
                 width="50"
@@ -162,42 +206,7 @@ async function main() {
 }
 }
   // load New folder in library on playbutton click
-  for (load of Array.from(document.querySelectorAll(".playbutton"))){
-    load.addEventListener('click',async function(e) {
-      let parent = (e.currentTarget.parentElement);
-      folder = parent.getElementsByTagName('h3')[0].innerText
-      songlist = await getsongs(`${folder}`);
-      // songlist = await getsongs(`./songs/${folder}`);
-      // console.log(songlist);
-      
-
-  let songUL = document
-    .querySelector(".songlist")
-    .getElementsByTagName("ul")[0];
-    songUL.innerHTML = "";
-  // playing the first song
-  playmusic(songlist[0])
-  document.querySelector(".trackname").innerHTML = clean_songname(currentsong.src.split("songs/")[1], folder)
-  for (let song of songlist) {
-    songurlname = song;
-
-    song = clean_songname(song, `${folder}`);
-    songUL.innerHTML = 
-      songUL.innerHTML +
-      `<li>
-                <span class = "music_logo"><img src="assets/music_logo.svg" alt="logo"></span>
-                <span class = "songname">${song}</span>
-                <span class = "songurlname">${songurlname}</span>
-                <span class = "foldername">${folder}</span>
-                <span class = "music_playbtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" color="#ffffff" fill="none">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" />
-                  <path d="M9.5 11.1998V12.8002C9.5 14.3195 9.5 15.0791 9.95576 15.3862C10.4115 15.6932 11.0348 15.3535 12.2815 14.6741L13.7497 13.8738C15.2499 13.0562 16 12.6474 16 12C16 11.3526 15.2499 10.9438 13.7497 10.1262L12.2815 9.32594C11.0348 8.6465 10.4115 8.30678 9.95576 8.61382C9.5 8.92086 9.5 9.6805 9.5 11.1998Z" fill="currentColor" />
-              </svg></span>
-              </li>`;
-  }
-  playmusicfromlibrarrybtn();
-    })
-  }
+  loadfolderinlibrary("playbutton")
 
     // play/Pause songs from bar
   play.addEventListener("click", () => {
@@ -210,6 +219,9 @@ async function main() {
     }
   });
 
+  // functionating the list btn
+    loadfolderinlibrary("showsongsbtn",false)
+    
   // update time duration
   currentsong.addEventListener("timeupdate", () => {
     document.querySelector(".duration").innerHTML = `${convertMilliseconds(

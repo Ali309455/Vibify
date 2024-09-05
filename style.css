@@ -164,6 +164,17 @@
   padding-top: 0vh;
   font-size: small;
 }
+.showsongsbtn{
+  /* font-size: small; */
+  position: absolute;
+  left: 18px;
+  top: 180px;
+  opacity: var(--o);
+  transform: translateY(-55px);
+  transition: all 0.5s ease-out;
+  /* background-color: black; */
+  /* padding: 6px; */
+}
 .playbutton {
   position: absolute;
   right: 18px;
@@ -392,14 +403,14 @@
   .card{
     width: max(200px, 15vw);
   }
-  /* .card_container{
+  .card_container{
     overflow: auto;
-    height: 30vh;
+    /* height: 30vh; */
     
     }
     .card_container:hover{
-      overflow: hidden;
-      } */
+      overflow: auto;
+      }
     }
     
 @media (max-width:700px) {
@@ -448,7 +459,7 @@
     overflow: auto;
   }
   .card_container:hover{
-    overflow: hidden;
+    overflow: auto;
   }
   .timeandvol{
     padding: 2px;
