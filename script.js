@@ -236,8 +236,8 @@ async function main() {
     if (currentsong.currentTime == currentsong.duration){
       let curr_song;
       console.log('currentsong.src', currentsong.src)
-      if (currentsong.src.includes('vibify')){
-      curr_song = (currentsong.src.split("vibify/")[1].replaceAll("%20"," "))
+      if (currentsong.src.includes('Vibify')){
+      curr_song = (currentsong.src.split("Vibify/")[1].replaceAll("%20"," "))
       }
       else if (currentsong.src.includes('SomethingLikeSpotify')){
       curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
@@ -274,8 +274,8 @@ async function main() {
   // Adding functionality to previous button
     previous.addEventListener("click", () => {
     let curr_song;
-    if (currentsong.src.includes('vibify')){
-    curr_song = (currentsong.src.split("vibify/")[1].replaceAll("%20"," "))
+    if (currentsong.src.includes('Vibify')){
+    curr_song = (currentsong.src.split("Vibify/")[1].replaceAll("%20"," "))
     }
     else if (currentsong.src.includes('SomethingLikeSpotify')){
     curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
@@ -294,8 +294,8 @@ async function main() {
   // Adding functionality to next button
   next.addEventListener("click", () => {let curr_song;
     
-    if (currentsong.src.includes('vibify')){
-    curr_song = (currentsong.src.split("vibify/")[1].replaceAll("%20"," "))
+    if (currentsong.src.includes('Vibify')){
+    curr_song = (currentsong.src.split("Vibify/")[1].replaceAll("%20"," "))
     }
     else if (currentsong.src.includes('SomethingLikeSpotify')){
     curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
