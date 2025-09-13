@@ -235,8 +235,9 @@ async function main() {
     );
     if (currentsong.currentTime == currentsong.duration){
       let curr_song;
-      if (currentsong.src.includes('3002')){
-      curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+      console.log('currentsong.src', currentsong.src)
+      if (currentsong.src.includes('vibify')){
+      curr_song = (currentsong.src.split("vibify/")[1].replaceAll("%20"," "))
       }
       else if (currentsong.src.includes('SomethingLikeSpotify')){
       curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
@@ -273,8 +274,8 @@ async function main() {
   // Adding functionality to previous button
     previous.addEventListener("click", () => {
     let curr_song;
-    if (currentsong.src.includes('3002')){
-    curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+    if (currentsong.src.includes('vibify')){
+    curr_song = (currentsong.src.split("vibify/")[1].replaceAll("%20"," "))
     }
     else if (currentsong.src.includes('SomethingLikeSpotify')){
     curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
@@ -292,14 +293,17 @@ async function main() {
   });
   // Adding functionality to next button
   next.addEventListener("click", () => {let curr_song;
-    if (currentsong.src.includes('3002')){
-    curr_song = (currentsong.src.split("3002/")[1].replaceAll("%20"," "))
+    
+    if (currentsong.src.includes('vibify')){
+    curr_song = (currentsong.src.split("vibify/")[1].replaceAll("%20"," "))
     }
     else if (currentsong.src.includes('SomethingLikeSpotify')){
     curr_song = (currentsong.src.split("SomethingLikeSpotify/")[1].replaceAll("%20"," "))
     }
     let nextfunct = altersonglist(songlist)
-    let index = nextfunct.indexOf(`${curr_song}`); 
+    let index = nextfunct.indexOf(`${curr_song}`);
+    console.log('currentsong.src', (currentsong.src))
+    console.log('nextfunct', nextfunct[0]) 
     index = index + 1;
     if (index < songlist.length) {
       playmusic(songlist[index]);
